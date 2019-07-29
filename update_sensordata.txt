@@ -1,0 +1,23 @@
+from tkinter import *
+import tkinter.font
+import Adafruit_DHT
+
+temp = 0
+
+win = Tk()
+win.title("Temperature")
+win.geometry("100x100")
+
+the_label = Label (win, text="", fg="black", bg="white", font="36")
+the_label.grid(row=0, column=0)
+
+def READ():
+    global temp
+    humidity, temperature = Adafruit_DHT.read_retry(11, 27)
+    temp = temperature * 9/5.0 + 32
+    the_label.configure(text=str(temp))
+
+
+def read_every_second():
+    READ()
+    root.after(1000, read_every_second)
